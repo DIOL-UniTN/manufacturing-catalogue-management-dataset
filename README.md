@@ -65,7 +65,7 @@ id,short_ita,short_eng,long_ita,long_eng
 Example:
 
 ```
-5000000629-00,CUSCINETTO RADIALE SFERA 629,DEEP GROOVE B-BEARING 629,,
+6526985464-00,CUSCINETTO RADIALE SFERA 629,DEEP GROOVE B-BEARING 629,,
 ```
 
 ### Selection datasets (`datasets/selection/`)
@@ -122,6 +122,18 @@ query,language
 | `llm_dataset_02.csv` | 100 | 50 | 50 |
 | `llm_dataset_03.csv` | 100 | 50 | 50 |
 
+### Pseudo-anonymisation
+
+The released files are a pseudo-anonymised version of the original data. The same transformation was applied consistently to a catalogue and to all its selection and insertion datasets, so every query still refers to the same item, and the hard and soft negatives keep their roles.
+
+- **Item codes** are replaced by random codes with the same format (digits by digits, letters by letters, version suffix kept). Codes quoted inside descriptions and queries are replaced in the same way.
+- **Names of companies, products, suppliers, and customers** are replaced by fictitious names. Each real name always maps to the same fictitious name within a catalogue and its datasets. Misspelled names in the queries are replaced by a misspelled version of the fictitious name, so the queries keep their level of noise.
+- **Machine model codes** are replaced by codes with different letters and enciphered digits. Variants of the same model (with or without separators, abbreviated, combined with other models) stay consistent with one another.
+- **Serial numbers** are replaced by random numbers.
+- **Generic components** (screws, nuts, bearings, seals, ...), dimensions, materials, technical standards, and supplier part numbers are left unchanged.
+
+Any resemblance of the fictitious names or codes to real companies, products, or codes is coincidental. Because names and codes changed, results obtained on these files can differ slightly from those reported in the paper.
+
 ## 🚀 Getting Started
 
 ```bash
@@ -141,7 +153,7 @@ row = dataset.iloc[0]
 print(row["query"], "->", items.loc[row["positive"], "short_ita"])
 ```
 
-Read the `id` columns as strings (`dtype=str`), so that codes such as `5000000629-00` are not altered.
+Read the `id` columns as strings (`dtype=str`), so that codes such as `6526985464-00` are not altered.
 
 To use the data with the code of the paper, place `catalogues/` and `datasets/` in the root of the code repository, or point to the files through its command-line arguments.
 
